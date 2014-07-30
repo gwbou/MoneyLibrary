@@ -1,0 +1,40 @@
+{
+    "name": "fotograf.de/money",
+    "description": "PHP implementation of Fowler's Money pattern based on mathiasverraes/money",
+    "type": "library",
+    "keywords": [ "Money", "Value Object", "Generic Sub-domain" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mathias Verraes",
+            "email": "mathias@verraes.net"
+        },
+		{
+            "name": "Gustav Wellner Bou",
+            "email": "gustav.wellnerbou@fotograf.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.3.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-0": {
+            "Money": "lib"
+        }
+    },
+
+    "config": {
+        "bin-dir": "bin"
+    },
+    "suggest": {
+    },
+    "minimum-stability": "dev"
+}
