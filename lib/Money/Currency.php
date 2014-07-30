@@ -18,6 +18,9 @@ class Currency
     /** @var array */
     private static $currencies;
 
+	/** @var array */
+	private static $formats;
+
     /**
      * @param string $name
      * @throws UnknownCurrencyException
@@ -27,6 +30,10 @@ class Currency
         if(!isset(static::$currencies)) {
            static::$currencies = require __DIR__.'/currencies.php';
         }
+
+	    if(!isset(static::$formats)) {
+		    static::$formats = require __DIR__.'/formats.php';
+	    }
 
         if (!array_key_exists($name, static::$currencies)) {
             throw new UnknownCurrencyException($name);
@@ -59,4 +66,13 @@ class Currency
     {
         return $this->getName();
     }
+
+	/**
+	 * @author Gustav Wellner Bou <wellner@solutica.de>
+	 * @return string
+	 */
+	public function getFormat()
+	{
+		return static::$formats[$this->name];
+	}
 }

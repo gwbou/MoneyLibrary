@@ -18,7 +18,7 @@ class Money
     const ROUND_HALF_ODD = PHP_ROUND_HALF_ODD;
 
     /**
-     * @var int
+     * @var float
      */
     private $amount;
 
@@ -33,10 +33,10 @@ class Money
      */
     public function __construct($amount, Currency $currency)
     {
-        if (!is_int($amount)) {
+        if (!is_int($amount) && !is_float($amount)) {
             throw new InvalidArgumentException("The first parameter of Money must be an integer. It's the amount, expressed in the smallest units of currency (eg cents)");
         }
-        $this->amount = $amount;
+        $this->amount = (float)$amount;
         $this->currency = $currency;
     }
 
@@ -193,7 +193,7 @@ class Money
         $this->assertOperand($multiplier);
         $this->assertRoundingMode($rounding_mode);
 
-        $product = (int) round($this->amount * $multiplier, 0, $rounding_mode);
+        $product = (float) round($this->amount * $multiplier, 0, $rounding_mode);
 
         return new Money($product, $this->currency);
     }
@@ -208,7 +208,7 @@ class Money
         $this->assertOperand($divisor);
         $this->assertRoundingMode($rounding_mode);
 
-        $quotient = (int) round($this->amount / $divisor, 0, $rounding_mode);
+        $quotient = (float) round($this->amount / $divisor, 0, $rounding_mode);
 
         return new Money($quotient, $this->currency);
     }
@@ -225,7 +225,7 @@ class Money
         $total = array_sum($ratios);
 
         foreach ($ratios as $ratio) {
-            $share = (int) floor($this->amount * $ratio / $total);
+            $share = (float) floor($this->amount * $ratio / $total);
             $results[] = new Money($share, $this->currency);
             $remainder -= $share;
         }
@@ -240,7 +240,7 @@ class Money
     /** @return bool */
     public function isZero()
     {
-        return $this->amount === 0;
+        return $this->amount === 0 || $this->amount === 0.0;
     }
 
     /** @return bool */
@@ -273,4 +273,20 @@ class Money
 
         return (int) $units;
     }
+
+	/**
+	 * @return string
+	 * @author Gustav Wellner Bou <wellner@solutica.de>
+	 */
+	public function format()
+	{
+		$format = $this->currency->getFormat();
+		$amount = number_format(abs($this->amount), $format['decimals'], $format['dec_point'], $format['thousands_sep']);
+
+		return str_replace(
+			array(':-', ':amount'),
+			array($this->isPositive() ? '' : '-', $amount),
+			$format['format']
+		);
+	}
 }

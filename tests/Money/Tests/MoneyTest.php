@@ -35,13 +35,13 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($euro, $m->getCurrency());
     }
 
-    /**
-     * @expectedException Money\InvalidArgumentException
-     */
-    public function testDecimalsThrowException()
-    {
-        $money = new Money(0.01, new Currency('EUR'));
-    }
+//    /**
+//     * @expectedException Money\InvalidArgumentException
+//     */
+//    public function testDecimalsThrowException()
+//    {
+//        $money = new Money(0.01, new Currency('EUR'));
+//    }
 
     /**
      * @expectedException Money\InvalidArgumentException
@@ -236,4 +236,11 @@ class MoneyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals($units, Money::stringToUnits($string));
     }
+
+	public function testFormat()
+	{
+		$this->assertEquals('5,00 €', Money::EUR(5)->format());
+		$this->assertEquals('123,46 €', Money::EUR(123.456)->format());
+		$this->assertEquals('-64,20 €', Money::EUR(-64.2)->format());
+	}
 }
