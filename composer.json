@@ -1,5 +1,5 @@
 {
-    "name": "fotograf.de/moneylibrary",
+    "name": "gwbou/MoneyLibrary",
     "description": "PHP implementation of Fowler's Money pattern based on mathiasverraes/money",
     "type": "library",
     "keywords": [ "Money", "Value Object", "Generic Sub-domain" ],
